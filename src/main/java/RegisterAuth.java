@@ -1,12 +1,14 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class RegisterAuth {
     private String dburl = "jdbc:postgresql://localhost:5432/postgres";
     private String dbuname = "postgres";
     private String dbpassword = "asuspro15";
     private String dbdriver = "org.postgresql.Driver";
+
+
     public void loadDriver(String dbDriver)
     {
         try {
@@ -42,5 +44,34 @@ public class RegisterAuth {
         }
         return result;
     }
+    public List<User> getAllUsers() {
+        loadDriver("org.postgresql.Driver");
+        Connection con = getConnection();
+        String sql = "SELECT * FROM \"user\"";
+        List<User> userList = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String uname = rs.getString("uname");
+                String password = rs.getString("password");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+
+                User user = new User(uname, password, email, phone);
+                userList.add(user);
+            }
+
+            rs.close();
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userList;
+    }
+
 
 }
