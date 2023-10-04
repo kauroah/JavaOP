@@ -26,6 +26,10 @@
             <td><input type="text" name="phone"></td>
         </tr>
         <tr>
+            <td>Age</td>
+            <td><input type="text" name="age"></td>
+        </tr>
+        <tr>
             <td>Submit</td>
             <td><input type="submit" value="register"></td>
         </tr>

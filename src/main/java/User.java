@@ -1,15 +1,21 @@
 public class User
 {
-    private String uname,password,email,phone;
+    private String uname;
+    private String password;
+    private String email;
+    private String phone;
+    private Integer age;
+
     public User() {
         super();
     }
-    public User(String uname, String password, String email, String phone) {
+    public User(String uname, String password, String email, String phone, Integer age) {
         super();
         this.uname = uname;
         this.password = password;
         this.email = email;
         this.phone = phone;
+        this.age = age;
     }
     public String getUname() {
         return uname;
@@ -34,6 +40,24 @@ public class User
     }
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+    @Override
+    public String toString() {
+        return "User{" +
+                "uname='" + uname + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", age='" + age + '\'' +
+                '}';
     }
 
 }

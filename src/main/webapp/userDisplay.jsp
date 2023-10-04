@@ -4,24 +4,30 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Users</title>
+    <title>User Display</title>
 </head>
 <body>
-<h1>List of Users</h1>
-<table border="1">
+<table>
+    <thead>
     <tr>
         <th>Username</th>
         <th>Password</th>
-
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Age</th>
     </tr>
-
-    <c:forEach var="user" items="${userList}">
+    </thead>
+    <tbody>
+    <c:forEach var="user" items="${users}">
         <tr>
             <td>${user.uname}</td>
             <td>${user.password}</td>
-
+            <td>${user.email}</td>
+            <td>${user.phone}</td>
+            <td>${user.age}</td>
         </tr>
     </c:forEach>
+    </tbody>
 </table>
 </body>
 </html>

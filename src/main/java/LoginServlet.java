@@ -18,8 +18,8 @@ public class LoginServlet extends HttpServlet {
         LoginAuth loginAuth = new LoginAuth();
 
         if (loginAuth.checkLogin(uname, password)) {
-            System.out.println("good");
-            response.sendRedirect("users.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login-success.jsp");
+            dispatcher.forward(request, response);
         } else {
             response.getWriter().println("USERNAME OR PASSWORD IS NOT CORRECT!");
         }

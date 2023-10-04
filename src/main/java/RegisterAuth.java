@@ -1,3 +1,5 @@
+import org.graalvm.compiler.lir.LIRInstruction;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,7 @@ public class RegisterAuth {
     public String insert(User user) {
         loadDriver("org.postgresql.Driver");
         Connection con = getConnection();
-        String sql = "insert into \"user\" values(?,?,?,?)";
+        String sql = "insert into \"user\" values(?,?,?,?,?)";
         String result="Data Entered Successfully";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -37,6 +39,7 @@ public class RegisterAuth {
             ps.setString(2, user.getPassword());
             ps.setString(3, user.getEmail());
             ps.setString(4, user.getPhone());
+            ps.setInt(5, user.getAge());
             ps.executeUpdate();
         } catch (SQLException e) {
             result="Data Not Entered Successfully";
@@ -45,7 +48,7 @@ public class RegisterAuth {
         return result;
     }
     public List<User> getAllUsers() {
-        loadDriver("org.postgresql.Driver");
+        loadDriver(dbdriver);
         Connection con = getConnection();
         String sql = "SELECT * FROM \"user\"";
         List<User> userList = new ArrayList<>();
@@ -59,8 +62,8 @@ public class RegisterAuth {
                 String password = rs.getString("password");
                 String email = rs.getString("email");
                 String phone = rs.getString("phone");
-
-                User user = new User(uname, password, email, phone);
+                Integer age = rs.getInt("age");
+                User user = new User(uname, password, email, phone, age);
                 userList.add(user);
             }
 
@@ -72,6 +75,62 @@ public class RegisterAuth {
         }
         return userList;
     }
+    public List <User> findUserByAge(int age) {
+        loadDriver(dbdriver);
+        Connection con = getConnection();
+        String sql = "SELECT * FROM \"user\" WHERE age=?";
+        User user = null;
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, age);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String uname = rs.getString("uname");
+                String password = rs.getString("password");
+                String phone = rs.getString("phone");
+                String email = rs.getString("email");
+                user = new User(uname, password, email, phone, age);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+         return (List<User>) user;
+    }
 
 
+    public User findUserByEmail(String email) {
+        loadDriver(dbdriver);
+        Connection con = getConnection();
+        String sql = "SELECT * FROM \"user\" WHERE email=?";
+        User user = null;
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String uname = rs.getString("uname");
+                String password = rs.getString("password");
+                String phone = rs.getString("phone");
+                Integer age = rs.getInt("age");
+                user = new User(uname, password, email, phone, age);
+            }
+
+            rs.close();
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
 }
+
+
+
+
