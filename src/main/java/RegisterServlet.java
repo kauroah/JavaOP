@@ -34,24 +34,6 @@ public class RegisterServlet extends HttpServlet {
         response.getWriter().println(result);
 
         System.out.println();
-//
-//        Integer searchAge = 10;
-//
-//        User userByAge = (User) registerAuth.findUserByAge(searchAge);
-//
-//        if (userByAge != null) {
-//            System.out.println("Users By Age:");
-//            System.out.println("Username: " + userByAge.getUname());
-//            System.out.println("Password: " + userByAge.getPassword());
-//            System.out.println("Email: " + userByAge.getEmail());
-//            System.out.println("Phone: " + userByAge.getPhone());
-//            System.out.println("Age: " + userByAge.getAge());
-//        } else {
-//            System.out.println("User not found with email: " + searchAge);
-//        }
-//
-//
-//        System.out.println();
 
         String searchEmail = "fahman@example.com";
         User foundUser = registerAuth.findUserByEmail(searchEmail);
